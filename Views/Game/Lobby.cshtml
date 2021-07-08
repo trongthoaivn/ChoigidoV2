@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Lobby";
+}
+
+
+<h2>Lobby</h2>
+<body>
+    <div class="col-lg-6">
+        <form class="navbar-form navbar-left">
+            <div class="form-group">
+                <input id="RoomId" type="text" class="form-control" placeholder="Room ID">
+            </div>
+            <button id="EnterRoom" type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        col-lg-6
+    </div>
+    <br />
+</body>
+
+@section scripts
+    {
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    <script>
+            $('#EnterRoom').click(function (e) {
+        e.preventDefault();
+        var Id = document.getElementById("RoomId").value;
+        if (Id == "") {
+            alert("Vui lòng nhập mã phòng");
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                /*dataType: "json",*/
+                url: "../api/CheckRoom",
+                data: { 'Id': Id},
+                success: function (data) {
+                    if (data.RoomID != "Null") {
+                        console.log("Mã phòng là: " + data.RoomID);
+                        var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
+                        window.location.href = url;
+                    }
+                    else
+                    {
+                        alert("Phòng không tồn tại hoặc đã đủ người chơi")
+                    }
+            },
+            error: function (error) {
+                jsonValue = jQuery.parseJSON(error.responseText);
+                alert("error" + error.responseText);
+            }
+        });
+                }
+                var hub = $.connection.serverHub;
+                console.log(hub)
+                $.connection.hub.start().done(function () {
+                    hub.server.joinRoom($("#RoomId").val(), "black");
+                    hub.server.updateplayer("black");
+                });
+    })
+    </script>
+}

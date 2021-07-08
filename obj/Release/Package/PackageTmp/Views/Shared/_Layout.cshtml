@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                @Html.ActionLink("ChoiGiDo Studio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="playnow">@Html.ActionLink("Play Now", "GameRoom", "Game")</li>
+                    <li>@Html.ActionLink("Lobby", "Lobby", "Game")</li>
+                    <li>@Html.ActionLink("Tutorial", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Product of ChoiGiDo Studio</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+<script>
+    $('.playnow').click(function (e) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "../api/CreateRoom",
+            /*data: source,*/
+            success: function (data) {
+                console.log("Mã phòng là: " + data.RoomID);
+                var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
+                window.location.href = url;
+            },
+            error: function (error) {
+                jsonValue = jQuery.parseJSON(error.responseText);
+                alert("error" + error.responseText);
+            }
+        });
+    })
+</script>

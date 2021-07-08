@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "GameRoom";
+}
+
+@section scripts
+{
+    <script src="~/Scripts/chat.js"></script>
+    <script src="~/Scripts/class.js"></script>
+    <script src="~/Scripts/moves.js"></script>
+    <script src="~/Scripts/ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/GameAPI.js"></script>
+    <link rel="stylesheet" href="~/Content/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    <script src="~/Scripts/Game.js"></script>
+}
+<body>
+    <div class="container">
+        <div class="row row-no-gutters">
+            <div id="col1" class="col-lg-3 ">
+                <div id="left">
+                    <div id="information">aaa</div>
+                    <div id="room">
+                        <span>Mã phòng:<span id="RoomId"></span></span>
+                        <input id="Fen" class="form-control" type="text" placeholder="input FEN string">
+                        <button id="Create_Board" type="submit" class="btn btn-primary mb-2" onclick="Create_lick()">Create Board</button>
+                    </div>
+                </div>
+            </div>
+            <div id="col2" class="col-lg-6 ">
+                <div id="board">
+                </div>
+            </div>
+            <div id="col3" class="col-lg-3">
+                <div id="right">
+                    <div id="head">
+                        <div id="black_player">Black_player:<span id="BlackId"></span></div>
+                        <div class="time" id="black">time</div>
+                        <div class="moves">Moves</div>
+                        <div class="time" id="white">time</div>
+                        <div id="white_player">White_player:<span id="WhiteId"></span></div>
+                    </div>
+                    <div id="body">
+
+                        <div id="chat-circle" class="btn btn-raised">
+                            <div id="chat-overlay"></div>
+                            <i class="material-icons">chat</i>
+                        </div>
+
+                        <div class="chat-box">
+                            <div class="chat-box-header">
+                                Chat Room
+                                <span class="chat-box-toggle"><i class="material-icons">close</i></span>
+                            </div>
+                            <div class="chat-box-body">
+                                <div class="chat-box-overlay">
+                                </div>
+                                <div class="chat-logs">
+
+                                </div><!--chat-log -->
+                            </div>
+                            <div class="chat-input">
+                                <form>
+                                    <input type="text" id="chat-input" placeholder="Send a message..." />
+                                    <button type="submit" class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
