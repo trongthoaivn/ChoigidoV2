@@ -31,5 +31,10 @@ namespace Choigido.Hubs
         {
             Clients.Group(group).player(message);
         }
+
+        public void sendMessage(string group, string message)
+        {
+            Clients.Group(group).getMessage("Group Message: " + message);
+        }
     }
 }

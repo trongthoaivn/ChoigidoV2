@@ -1,6 +1,4 @@
 ﻿$(document).ready(function () {
-    var INDEX = 0;
-    message_submit();
     //popup lên thông báo nhập tên
     var person = prompt("Hãy nhập tên của bạn", "");
     if (person == "") {
@@ -11,9 +9,6 @@
     var searchParams = new URLSearchParams(window.location.search);
     var param = searchParams.get('Id');
 
-    //Load thông tin phòng lên
-    loadRoom(param);
-
     //Cập nhật tên vào room
     UpdateRoom(param, person);
 
@@ -23,14 +18,26 @@
     $.connection.hub.start().done(function () {
         hub.server.joinRoom(param, person);
     });
-    console.log(hub.client.player)
+
+    //Thông báo có người kết nối
+    hub.client.addChatMessage = function (name) {
+        //cái này là khi có ng kết nối sẽ load lại bàn cờ th
+        loadRoom(param);
+        //lấy thông báo (vd: 123 joined)
+        sendMessage(name, 'self');
+    };
+
+    //Lấy tn qua lại, cái này là nhắn tin
+    hub.client.getMessage = function (message) {
+        sendMessage(message, 'aaa');
+    }
 
     //Mở hộp tn lên
     $(document).delegate(".chat-btn", "click", function () {
         var value = $(this).attr("chat-value");
         var name = $(this).html();
         $("#chat-input").attr("disabled", false);
-        generate_message(name, 'self');
+        sendMessage(name, 'self');
     })
 
     $("#chat-circle").click(function () {
@@ -42,18 +49,28 @@
         $("#chat-circle").toggle('scale');
         $(".chat-box").toggle('scale');
     })
+
+    //bắt sự kiện nhấn nút gửi tn và gửi đi
+    $("#chat-submit").click(function (e) {
+        e.preventDefault();
+        var msg = $("#chat-input").val();
+        if (msg.trim() == '') {
+            return false;
+        }
+        hub.server.sendMessage(param, msg);
+    })
 });
-function chat (name, msg) {
-    generate_message(msg, "")
+function chat(name, msg) {
+    sendMessage(msg, "self")
 }
 
-function UpdateRoom(param, player) {
+function UpdateRoom(room, player) {
     $.ajax({
         type: "GET",
         dataType: "json",
         url: "../api/UpdateRoom",
         data: {
-            'Id': param,
+            'Id': room,
             'Player': player
         },
         success: function (data) {
@@ -82,24 +99,11 @@ function loadRoom(room) {
     });
 }
 
-function message_submit(){
-    $("#chat-submit").click(function (e) {
-        e.preventDefault();
-        var msg = $("#chat-input").val();
-        if (msg.trim() == '') {
-            return false;
-        }
-        sendMessage(msg, 'self');
-    })
-}
-
+var INDEX = 0;
 function sendMessage(msg, type) {
     INDEX++;
     var str = "";
     str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg " + type + "\">";
-    str += "          <span class=\"msg-avatar\">";
-    str += "            <img src=\"https:\/\/image.crisp.im\/avatar\/operator\/196af8cc-f6ad-4ef7-afd1-c45d5231387c\/240\/?1483361727745\">";
-    str += "          <\/span>";
     str += "          <div class=\"cm-msg-text\">";
     str += msg;
     str += "          <\/div>";
