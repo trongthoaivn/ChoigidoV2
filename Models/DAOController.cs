@@ -36,14 +36,33 @@ namespace Choigido.Models
         {
             bool flag = false;
             var room = dao.tblChessGame.FirstOrDefault(p => p.GameID.Equals(Id));
-            if (room.PlayerWhiteID == null)
+            if (room.PlayerBlackID == null)
             {
-                string day = DateTime.Now.ToString("dd");
-                string min = DateTime.Now.ToString("mm");
-                string sec = DateTime.Now.ToString("ss");
-                string MaNguoiChoi = "User" + sec + "" + day + "" + min;
-                room.PlayerWhiteID = MaNguoiChoi;
-                dao.SaveChanges();
+                flag = true;
+            }
+            else
+            {
+                flag = false;
+            }
+            return flag;
+        }
+
+        public bool updatePlayer(string Id, string MaNguoiChoi)
+        {
+            bool flag = false;
+            var room = dao.tblChessGame.FirstOrDefault(p => p.GameID.Equals(Id));
+            if (room != null)
+            {
+                if (room.PlayerWhiteID == null)
+                {
+                    room.PlayerWhiteID = MaNguoiChoi;
+                    dao.SaveChanges();
+                }
+                else if(room.PlayerBlackID == null)
+                {
+                    room.PlayerBlackID = MaNguoiChoi;
+                    dao.SaveChanges();
+                }
                 flag = true;
             }
             else
