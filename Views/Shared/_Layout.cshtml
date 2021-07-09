@@ -22,10 +22,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="playnow">@Html.ActionLink("Play Now", "GameRoom", "Game")</li>
+                    <button id="EnterRoom">Vào phòng</button>
+                    <input type="text" id="RoomId"/>
                     <li>@Html.ActionLink("Lobby", "Lobby", "Game")</li>
                     <li>@Html.ActionLink("Tutorial", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <button class="playnow"/>Chơi ngay</button>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -64,5 +66,38 @@
                 alert("error" + error.responseText);
             }
         });
+    })
+</script>
+
+<script>
+    $('#EnterRoom').click(function (e) {
+        e.preventDefault();
+        var Id = document.getElementById("RoomId").value;
+        if (Id == "") {
+            alert("Vui lòng nhập mã phòng");
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                /*dataType: "json",*/
+                url: "../api/CheckRoom",
+                data: { 'Id': Id},
+                success: function (data) {
+                    if (data.RoomID != "Null") {
+                        console.log("Mã phòng là: " + data.RoomID);
+                        var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
+                        window.location.href = url;
+                    }
+                    else
+                    {
+                        alert("Phòng không tồn tại hoặc đã đủ người chơi")
+                    }
+            },
+            error: function (error) {
+                jsonValue = jQuery.parseJSON(error.responseText);
+                alert("error" + error.responseText);
+            }
+        });
+        }
     })
 </script>

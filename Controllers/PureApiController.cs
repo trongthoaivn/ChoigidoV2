@@ -28,15 +28,10 @@ namespace Choigido.Controllers
             string min = DateTime.Now.ToString("mm");
             string sec = DateTime.Now.ToString("ss");
             string MaPhong = "Room" + day + "" + min + "" + sec;
-            day = DateTime.Now.ToString("dd");
-            min = DateTime.Now.ToString("mm");
-            sec = DateTime.Now.ToString("ss");
-            string MaNguoiChoi = "User" + sec + "" + day + "" + min;
 
             //Lưu vào database
             tblChessGame room = new tblChessGame();
             room.GameID = MaPhong;
-            room.PlayerBlackID = MaNguoiChoi;
 
             if (new DAOController().createRoom(room))
             {
@@ -83,6 +78,29 @@ namespace Choigido.Controllers
         public IHttpActionResult GetRoomInf(string Id)
         {
             if (new DAOController().getRoomInf(Id) != null)
+            {
+                var room = new DAOController().getRoomInf(Id);
+                return Json(new
+                {
+                    RoomID = room.GameID,
+                    BlackId = room.PlayerBlackID,
+                    WhiteId = room.PlayerWhiteID
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    RoomID = "Null"
+                });
+            }
+        }
+
+        [HttpGet]
+        [Route("api/UpdateRoom")]
+        public IHttpActionResult UpdateRoom(string Id, string Player)
+        {
+            if (new DAOController().updatePlayer(Id, Player))
             {
                 var room = new DAOController().getRoomInf(Id);
                 return Json(new
