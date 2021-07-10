@@ -1,6 +1,7 @@
 ﻿
 var hub = $.connection.serverHub;
 var player_name;
+var playeris;
 var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
 $(document).ready(function () {
@@ -45,12 +46,19 @@ $(document).ready(function () {
         make_move(ol, ne);
 
     }
+
+    hub.client.get_turn = function (msg) {
+        console.log(msg)
+    }
+
     // play để bắt đầu
     $("#play").click(function () {
         if (player_name == $('#WhiteId').text()) {
-            set_drag("w")
+            set_drag("w");
+            playeris = "w";
         } else {
-            set_drag("b")
+            set_drag("b");
+            playeris = "b";
         }
     });
 
@@ -309,7 +317,6 @@ function set_drop(id) {
         drop: function (ev, ui) {
             var dropped = ui.draggable;
             var droppedOn = $(this);
-
             hub.server.send_move(param, $(dropped).parent().attr("id"), $(droppedOn).attr("id"))
             $(droppedOn).find('img').remove();
             $(dropped).detach().css({ top: 0, left: 0 }).appendTo(droppedOn);
@@ -317,7 +324,7 @@ function set_drop(id) {
                 disabled: true
             });
             $("td").css({ "border": "" });
-            
+            hub.server.set_turn(param, playeris)
         }
     });
 }

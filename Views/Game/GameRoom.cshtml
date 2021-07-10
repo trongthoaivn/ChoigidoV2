@@ -7,8 +7,8 @@
 {
     <script src="~/Scripts/class.js"></script>
     <script src="~/Scripts/moves.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/GameAPI.js"></script>
     <link rel="stylesheet" href="~/Content/style.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,10 +21,10 @@
         <div class="row row-no-gutters">
             <div id="col1" class="col-lg-3 ">
                 <div id="left">
-                    <div id="information">aaa</div>
+                    <div id="information"><span>Mã phòng : <span id="Idr"></span></span></div>
                     <div id="room">
-                        <span>Mã phòng:<span id="Idr"></span></span>
-                        <input id="Fen" class="form-control" type="text" placeholder="input FEN string">
+                        <span>Game Options</span>
+                        <input id="Fen" class="form-control" type="text" placeholder="Input fen">
                         <button id="Create_Board" type="submit" class="btn btn-primary mb-2" onclick="Create_lick()">Create Board</button>
                         <button type="button" id="play" class="btn btn-success">play</button>
                     </div>
@@ -41,7 +41,7 @@
                             <span id="BlackId"></span>
                         </div>
                         <div class="time" id="black">time</div>
-                        <div class="moves">Moves</div>
+                        <div class="moves">Move Log</div>
                         <div class="time" id="white">time</div>
                         <div id="white_player" style="text-align:center"> White player :
                             <span id="WhiteId"></span>
