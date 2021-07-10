@@ -11,6 +11,7 @@ namespace Choigido.Hubs
     [HubName("serverHub")]
     public class Hubs : Hub
     {
+        Boolean wb = true;
         public async Task JoinRoom(string roomName, string name)
         {
             await Groups.Add(Context.ConnectionId, roomName);
@@ -31,10 +32,18 @@ namespace Choigido.Hubs
         {
             Clients.Group(group).player(message);
         }
-
-        public void sendMessage(string group, string message)
+        public void set_turn(string group,string msg)
         {
-            Clients.Group(group).getMessage("Group Message: " + message);
+            Clients.OthersInGroup(group).get_turn(msg);
+        }
+
+        public void send_move(string group , string ol ,string ne)
+        {
+            Clients.OthersInGroup(group).make_move(ol,ne);
+        }
+        public void sendMessage(string group, string name, string message)
+        {
+            Clients.OthersInGroup(group).getMessage(name +" : "+message);
         }
     }
 }

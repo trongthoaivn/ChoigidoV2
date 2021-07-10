@@ -220,9 +220,9 @@
     <Content Include="Content\Image\black_queen.svg" />
     <Content Include="Content\Image\black_rook.svg" />
     <Content Include="Content\Image\Chessboard.svg" />
+    <Content Include="Content\Image\Logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Image\Pure_Chess_Logo_R_trans.png" />
-    <Content Include="Content\Image\Logo.png" />
     <Content Include="Content\Image\Logomark.png" />
     <Content Include="Content\Image\white_bishop.svg" />
     <Content Include="Content\Image\white_king.svg" />
@@ -258,7 +258,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moves.js" />
-    <Content Include="Scripts\ui.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -5,10 +5,8 @@
 
 @section scripts
 {
-    @*<script src="~/Scripts/chat.js"></script>*@
     <script src="~/Scripts/class.js"></script>
     <script src="~/Scripts/moves.js"></script>
-    <script src="~/Scripts/ui.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/GameAPI.js"></script>
@@ -25,9 +23,10 @@
                 <div id="left">
                     <div id="information">aaa</div>
                     <div id="room">
-                        <span>Mã phòng:<span id="RoomId"></span></span>
+                        <span>Mã phòng:<span id="Idr"></span></span>
                         <input id="Fen" class="form-control" type="text" placeholder="input FEN string">
                         <button id="Create_Board" type="submit" class="btn btn-primary mb-2" onclick="Create_lick()">Create Board</button>
+                        <button type="button" id="play" class="btn btn-success">play</button>
                     </div>
                 </div>
             </div>
@@ -38,11 +37,15 @@
             <div id="col3" class="col-lg-3">
                 <div id="right">
                     <div id="head">
-                        <div id="black_player">Black_player:<span id="BlackId"></span></div>
+                        <div id="black_player" style="text-align:center"> Black player :
+                            <span id="BlackId"></span>
+                        </div>
                         <div class="time" id="black">time</div>
                         <div class="moves">Moves</div>
                         <div class="time" id="white">time</div>
-                        <div id="white_player">White_player:<span id="WhiteId"></span></div>
+                        <div id="white_player" style="text-align:center"> White player :
+                            <span id="WhiteId"></span>
+                        </div>
                     </div>
                     <div id="body">
 
