@@ -25,6 +25,7 @@ $(document).ready(function () {
         hub.server.joinRoom(param, person);
         make_board();
         draw_pieces();
+        $("#turn").text(turn);
     });
 
     //Thông báo có người kết nối
@@ -46,19 +47,20 @@ $(document).ready(function () {
         make_move(ol, ne);
 
     }
-
+    // set luot di
     hub.client.get_turn = function (msg) {
-        console.log(msg)
+        $("#turn").text(msg);
+        turn = msg;
     }
-
     // play để bắt đầu
     $("#play").click(function () {
         if (player_name == $('#WhiteId').text()) {
             set_drag("w");
-            playeris = "w";
+            playeris = "white";
+           // hub.server.set_turn(param,"w")
         } else {
             set_drag("b");
-            playeris = "b";
+            playeris = "black";
         }
     });
 
@@ -167,7 +169,7 @@ const R = new pieces("R", "w", "/Content/Image/white_rook.svg", "");
 const P = new pieces("P", "w", "/Content/Image/white_pawn.svg", "");
 
 const List_pieces = [k, q, b, n, r, p, K, Q, B, N, R, P]
-
+var turn = "white";
 //tạo bàn cờ theo fen
 function Create_lick() {
     var Fen = $("#Fen").val();
@@ -292,7 +294,8 @@ function set_drag(id) {
             let p = new pieces();
             let position = new Position($(img).parent().attr("id")[0], $(img).parent().attr("id")[1]);
             p = get_Pieces(img);
-            let accept_position = get_moves(p, position)
+            let accept_position = [];
+            if ($("#turn").text() == playeris) accept_position = get_moves(p, position);
             console.log(accept_position)
             accept_position.forEach(e => {
                 let x = e.x;
@@ -324,7 +327,9 @@ function set_drop(id) {
                 disabled: true
             });
             $("td").css({ "border": "" });
-            hub.server.set_turn(param, playeris)
+            turn = (turn == "white") ? "black" : "white";
+            $("#turn").text(turn);
+            hub.server.set_turn(param, turn)
         }
     });
 }
