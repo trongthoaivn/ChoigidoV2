@@ -52,6 +52,12 @@ $(document).ready(function () {
         createLog(message);
     }
 
+    //refresh bàn cờ nếu nhấn undo redo
+    hub.client.uRFen = function (fen) {
+        Clear_board();
+        draw_pieces(fen);
+    }
+
     // set luot di
     hub.client.get_turn = function (msg) {
         $("#turn").text(msg);
