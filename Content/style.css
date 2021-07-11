@@ -7,22 +7,24 @@
 #col3{
   text-align: center;
 }
-table{
+.table-games {
     margin-top: 50px;
     margin-bottom: auto;
 }
 #Fen{
     height: 30px;
+    width :60%;
     margin-bottom: 20px;
-    margin-top: 220px;
+    margin-top: 20px;
+    margin-left:55px;
+    margin-right:55px;
 }
 body{
     background-color: #eeebe9;
 }
 #Create_Board{
     text-align: center;
-    height: 40px;
-    width: 120px;
+
 }
 tbody{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
@@ -44,6 +46,7 @@ tbody{
     margin-top: 15px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align:center;
 }
 #black_player{
   background-color: white;
@@ -75,6 +78,7 @@ tbody{
   border-radius: 5px;
   border-bottom: 5px solid #f6d8b5;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  overflow-y: auto;
 }
 #white_player{
   background-color: white;
@@ -236,11 +240,25 @@ tbody{
   {
       background-color: #5A5EB9;
   }
-  
-  
-  
-  @media only screen and (max-width: 500px) {
-     .chat-logs {
+
+.move-table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 17px;
+}
+
+    .move-table th {
+        padding: 5px;
+        text-align: center;
+    }
+
+    .move-table td {
+        padding: 5px;
+        text-align: center;
+    }
+
+@media only screen and (max-width: 500px) {
+    .chat-logs {
           height:40vh;
       }
   }

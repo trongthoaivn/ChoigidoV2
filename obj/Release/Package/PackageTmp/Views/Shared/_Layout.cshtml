@@ -22,7 +22,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="playnow">@Html.ActionLink("Play Now", "GameRoom", "Game")</li>
                     <li>@Html.ActionLink("Lobby", "Lobby", "Game")</li>
                     <li>@Html.ActionLink("Tutorial", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -47,22 +46,3 @@
 </body>
 
 </html>
-<script>
-    $('.playnow').click(function (e) {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "../api/CreateRoom",
-            /*data: source,*/
-            success: function (data) {
-                console.log("Mã phòng là: " + data.RoomID);
-                var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
-                window.location.href = url;
-            },
-            error: function (error) {
-                jsonValue = jQuery.parseJSON(error.responseText);
-                alert("error" + error.responseText);
-            }
-        });
-    })
-</script>
