@@ -19,22 +19,29 @@ $(document).ready(function () {
     UpdateRoom(param, person);
 
     //Kết nối socket
-    
     console.log(hub)
     $.connection.hub.start().done(function () {
         hub.server.joinRoom(param, person);
         make_board();
         draw_pieces();
         $("#turn").text(turn);
+        $("#kayle").text("Waiting for player 2 ");
+        $("#play").attr("disabled", true);
     });
 
     //Thông báo có người kết nối
     hub.client.addChatMessage = function (name) {
         //cái này là khi có ng kết nối sẽ load lại bàn cờ th
         loadRoom(param);
-        
+
         //lấy thông báo (vd: 123 joined)
         sendMessage(name, "");
+        setTimeout(function () { 
+            if (!($('#BlackId').text() == "")) {
+                $("#play").attr("disabled", false);
+                $("#kayle").text("Press Start Game !");
+            }
+        }, 3000);
     };
 
     //Lấy tn qua lại, cái này là nhắn tin
@@ -52,15 +59,32 @@ $(document).ready(function () {
         $("#turn").text(msg);
         turn = msg;
     }
+
+    //move Log
+    hub.client.getFen = function (ol, ne, fen) {
+        
+        createLog(ol, ne, fen);
+    }
+
+
+    hub.client.getKayleSpeech = function (msg) {
+        console.log("sad :" + msg)
+        if (msg == playeris) {
+            $("#kayle").text("Your turn !");
+        } else $("#kayle").text("Opponent's turn !");
+    }
+
     // play để bắt đầu
     $("#play").click(function () {
         if (player_name == $('#WhiteId').text()) {
             set_drag("w");
             playeris = "white";
+            $("#kayle").text("Your turn fisrt !");
            // hub.server.set_turn(param,"w")
         } else {
             set_drag("b");
             playeris = "black";
+            $("#kayle").text("Opponent's turn !");
         }
     });
 
@@ -195,6 +219,13 @@ function fen_generate() {
             } else fen += "*"
         }
         fen += "/"
+        var str = "********";
+        for (let i = 8; i >= 1; i--) {
+            while (fen.indexOf(str) != -1) {
+                fen = fen.replace(str, i);
+            }
+            str = str.slice(0, -1)
+        }
     }
     return fen;
 }
@@ -320,9 +351,12 @@ function set_drop(id) {
         drop: function (ev, ui) {
             var dropped = ui.draggable;
             var droppedOn = $(this);
-            hub.server.send_move(param, $(dropped).parent().attr("id"), $(droppedOn).attr("id"))
+            var ol = $(dropped).parent().attr("id");
+            var ne = $(droppedOn).attr("id")
+            hub.server.send_move(param, ol , ne)
             $(droppedOn).find('img').remove();
             $(dropped).detach().css({ top: 0, left: 0 }).appendTo(droppedOn);
+
             $("td").droppable({
                 disabled: true
             });
@@ -330,6 +364,14 @@ function set_drop(id) {
             turn = (turn == "white") ? "black" : "white";
             $("#turn").text(turn);
             hub.server.set_turn(param, turn)
+            hub.server.sendFen(param, ol, ne, fen_generate());
+            hub.server.setKayleSpeech(param,turn)
         }
     });
+}
+var init = 1;
+function createLog(ol, ne, fen) {
+    $('#move-table').append(' <a href="#"  id="'+fen+'" class="list-group-item">' + init +  ' : ' + ol +' => '+ne+ ' </a>');
+    init++;
+    //bắt sự kiện nhấn fen lịch sử
 }

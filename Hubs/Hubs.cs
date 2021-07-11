@@ -45,5 +45,16 @@ namespace Choigido.Hubs
         {
             Clients.OthersInGroup(group).getMessage(name +" : "+message);
         }
+
+        public void sendFen(string group,string ol,string ne, string fen)
+        {
+            Clients.Group(group).getFen(ol,ne,fen);
+        }
+
+        public void setKayleSpeech(string group, string msg)
+        {
+            Clients.Group(group).getKayleSpeech(msg);
+        }
+
     }
 }
