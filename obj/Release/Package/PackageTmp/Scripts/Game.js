@@ -66,12 +66,18 @@ $(document).ready(function () {
         createLog(ol, ne, fen);
     }
 
-
+    //kayle  noi
     hub.client.getKayleSpeech = function (msg) {
-        console.log("sad :" + msg)
         if (msg == playeris) {
             $("#kayle").text("Your turn !");
         } else $("#kayle").text("Opponent's turn !");
+    }
+
+    hub.client.getReply = function (msg, fen) {
+         console.log("aa")
+        var reply = confirm("The opponent asked to be undo " + msg);
+       
+        //alert(reply);
     }
 
     // play để bắt đầu
@@ -243,9 +249,7 @@ function draw_pieces(Fen) {
     Arr = Fen.split(" ");
     var board = Arr[0];
     var turn_player = Arr[1];
-    color = turn_player;
-    var Round = Arr[4];
-    var turn = Arr[5];
+    turn = (turn_player == "w") ? "white" : "black";
     var Row = board.split("/");
     var Fen_compile = []
     for (let i = 0; i < 8; i++) {
@@ -371,7 +375,9 @@ function set_drop(id) {
 }
 var init = 1;
 function createLog(ol, ne, fen) {
-    $('#move-table').append(' <a href="#"  id="'+fen+'" class="list-group-item">' + init +  ' : ' + ol +' => '+ne+ ' </a>');
+    $('#move-table').append(' <button type="button" style="text-align:center" id="' + fen + '" class="list-group-item ">' + init + ' : ' + ol + ' => ' + ne + ' </button>');
+    $("#move-table button").click(function () {
+        hub.server.sendRequest(param, init + ' : ' + ol + ' => ' + ne, fen);
+    });
     init++;
-    //bắt sự kiện nhấn fen lịch sử
 }

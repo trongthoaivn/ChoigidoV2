@@ -56,5 +56,14 @@ namespace Choigido.Hubs
             Clients.Group(group).getKayleSpeech(msg);
         }
 
+        public void sendRequest(string group, string msg,string fen)
+        {
+            Clients.OthersInGroup(group).getReply(msg,fen);
+        }
+
+        public void sendUpdateBoard(string group,string fen)
+        {
+            Clients.Group(group).setUpdateBoard(fen);
+        }
     }
 }

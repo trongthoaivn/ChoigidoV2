@@ -6,6 +6,7 @@ var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
 $(document).ready(function () {
 
+
     //popup lên thông báo nhập tên
     var person = prompt("Hãy nhập tên của bạn", "");
     if (person == "") {
@@ -66,12 +67,51 @@ $(document).ready(function () {
         createLog(ol, ne, fen);
     }
 
-
+    //kayle  noi
     hub.client.getKayleSpeech = function (msg) {
-        console.log("sad :" + msg)
         if (msg == playeris) {
             $("#kayle").text("Your turn !");
         } else $("#kayle").text("Opponent's turn !");
+    }
+
+    hub.client.setUpdateBoard = function (fen) {
+        Clear_board();
+        draw_pieces(fen);
+        if (turn == "white") set_drag("w")
+        else set_drag("b")
+        if (turn == playeris) {
+            $("#kayle").text("Your turn !");
+        } else $("#kayle").text("Opponent's turn !");
+    }
+
+    // request undo
+    hub.client.getReply = function (msg, fen) {
+        if (fen == "") {
+            $.alert({
+                title: 'Reply for request undo',
+                content: 'Rejected',
+            });
+        } else
+            $.confirm({
+            title: 'Notification',
+            content: 'The opponent asked to be undo ' + msg,
+            buttons: {
+                Accept: {
+                    text: 'Accept',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        hub.server.sendUpdateBoard(param, fen);
+                    }
+                },
+                Ignore: {
+                    text: 'Rejected',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        hub.server.sendRequest(param, msg, "");
+                    }
+                }
+            }
+        });
     }
 
     // play để bắt đầu
@@ -80,8 +120,10 @@ $(document).ready(function () {
             set_drag("w");
             playeris = "white";
             $("#kayle").text("Your turn fisrt !");
-           // hub.server.set_turn(param,"w")
-        } else {
+            // hub.server.set_turn(param,"w")
+
+        } else
+        if (player_name == $('#BlackId').text()){
             set_drag("b");
             playeris = "black";
             $("#kayle").text("Opponent's turn !");
@@ -193,7 +235,7 @@ const R = new pieces("R", "w", "/Content/Image/white_rook.svg", "");
 const P = new pieces("P", "w", "/Content/Image/white_pawn.svg", "");
 
 const List_pieces = [k, q, b, n, r, p, K, Q, B, N, R, P]
-var turn = "white";
+var turn ="white" ;
 //tạo bàn cờ theo fen
 function Create_lick() {
     var Fen = $("#Fen").val();
@@ -227,11 +269,14 @@ function fen_generate() {
             str = str.slice(0, -1)
         }
     }
+    let color = (turn == "white") ? "w" : "b";
+    fen = fen.slice(0, -1) + " " + color;
     return fen;
 }
 //clear board
 function Clear_board() {
-    $('img').remove();
+    $('.b').remove();
+    $('.w').remove();
 }
 // tạo quân cờ
 function draw_pieces(Fen) {
@@ -243,9 +288,7 @@ function draw_pieces(Fen) {
     Arr = Fen.split(" ");
     var board = Arr[0];
     var turn_player = Arr[1];
-    color = turn_player;
-    var Round = Arr[4];
-    var turn = Arr[5];
+    turn = (turn_player == "w") ? "white" : "black";
     var Row = board.split("/");
     var Fen_compile = []
     for (let i = 0; i < 8; i++) {
@@ -371,7 +414,9 @@ function set_drop(id) {
 }
 var init = 1;
 function createLog(ol, ne, fen) {
-    $('#move-table').append(' <a href="#"  id="'+fen+'" class="list-group-item">' + init +  ' : ' + ol +' => '+ne+ ' </a>');
+    $('#move-table').append(' <button type="button" style="text-align:center" id="' + fen + '" class="Log' + init + ' list-group-item ">' + init + ' : ' + ol + ' => ' + ne + ' </button>');
+    $('.Log' + init).click(function () {
+        hub.server.sendRequest(param, $(this).text(), $(this).attr("id"));
+    });
     init++;
-    //bắt sự kiện nhấn fen lịch sử
 }
