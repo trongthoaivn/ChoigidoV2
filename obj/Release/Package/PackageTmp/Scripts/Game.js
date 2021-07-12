@@ -77,8 +77,14 @@ $(document).ready(function () {
     hub.client.setUpdateBoard = function (fen) {
         Clear_board();
         draw_pieces(fen);
-        if (turn == "white") set_drag("w")
-        else set_drag("b")
+        if (turn == "white") {
+            set_drag("w");
+            $("#turn").text("white");
+        }
+        else {
+            set_drag("b");
+            $("#turn").text("black");
+        } 
         if (turn == playeris) {
             $("#kayle").text("Your turn !");
         } else $("#kayle").text("Opponent's turn !");
@@ -289,6 +295,7 @@ function draw_pieces(Fen) {
     var board = Arr[0];
     var turn_player = Arr[1];
     turn = (turn_player == "w") ? "white" : "black";
+    console.log(turn)
     var Row = board.split("/");
     var Fen_compile = []
     for (let i = 0; i < 8; i++) {
