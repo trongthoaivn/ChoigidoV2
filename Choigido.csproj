@@ -229,6 +229,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Image\demacia.jpg" />
+    <Content Include="Content\Image\demacia1.jpg" />
+    <Content Include="Content\Image\demacia3.jpeg" />
+    <Content Include="Content\Image\noxus.png" />
+    <Content Include="Content\Image\vs2018Lol.jpg" />
     <Content Include="Content\Image\akali-chibi.png" />
     <Content Include="Content\Image\black_bishop.svg" />
     <Content Include="Content\Image\black_king.svg" />

@@ -20,12 +20,17 @@ table{
     margin-left:55px;
     margin-right:55px;
 }
-body{
+body {
     background-color: #eeebe9;
+    
 }
-#Create_Board{
+.back {
+    background-image: url(../Content/Image/vs2018Lol.jpg); 
+    background-size: 100%;
+    background-repeat: no-repeat
+}
+#Create_Board {
     text-align: center;
-
 }
 .tb{
     
@@ -75,7 +80,7 @@ tbody{
 .moves {
     background-color: white;
     height: 250px;
-    width: 330px;
+    width: 250px;
     margin-top: 50px;
     margin-bottom: 50px;
     margin-left: 10px;

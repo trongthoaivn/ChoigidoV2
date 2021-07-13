@@ -11,7 +11,6 @@ namespace Choigido.Hubs
     [HubName("serverHub")]
     public class Hubs : Hub
     {
-        Boolean wb = true;
         public async Task JoinRoom(string roomName, string name)
         {
             await Groups.Add(Context.ConnectionId, roomName);

@@ -18,21 +18,23 @@
     <script src="~/signalr/Hubs"></script>
     <script src="~/Scripts/Game.js"></script>
 }
-<body>
-    <video autoplay muted loop id="myVideo">
+<body class="back"  >
+    @*<video autoplay muted loop id="myVideo">
         <source src="~/Content/Video/covid.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
-    </video>
-    <div class="container">
+    </video>*@
+    <div class="container" >
         <div class="row row-no-gutters">
             <div id="col1" class="col-lg-3 ">
                 <div id="left">
                     <div id="information">
+                        <br />
                         <b>Room ID : <span id="Idr"></span></b>
                         <p></p>
                         <b> Turn : <span id="turn"></span></b>
                     </div>
                     <div id="room">
+                        <br />
                         <b>Game Options</b>
                         <input id="Fen" class="form-control" type="text" placeholder="Input fen">
                         <button id="Create_Board" type="submit" class="btn btn-primary mb-2" onclick="Create_lick()">Load Game</button>
@@ -40,7 +42,7 @@
                         <p></p>
                         <b id="kayle">Wellcome hero!</b>
                         <br />
-                        <img src="~/Content/Image/akali-chibi.png" width="100%" />
+                        <img src="~/Content/Image/YxoIETK.gif" style=" width:100%" />
                     </div>
                 </div>
             </div>
@@ -52,8 +54,8 @@
                 <div id="right">
                     <div id="head">
                         <div id="black_player" style="text-align:center">
-                            Black player :
-                            <b id="BlackId"></b>
+                            <b>Black player :</b>
+                            <p><b id="BlackId"></b></p>
                         </div>
                         <div class="time" id="black">time</div>
                         <div class="moves">
@@ -64,8 +66,8 @@
                         </div>
                         <div class="time" id="white">time</div>
                         <div id="white_player" style="text-align:center">
-                            White player :
-                            <b id="WhiteId"></b>
+                            <b>White player :</b>   
+                            <p><b id="WhiteId"></b></p>
                         </div>
                     </div>
                     <div id="body">
