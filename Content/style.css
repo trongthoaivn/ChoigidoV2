@@ -21,7 +21,6 @@ table{
     margin-right:55px;
 }
 body {
-    background-color: #eeebe9;
     
 }
 .back {
@@ -41,44 +40,44 @@ tbody{
     user-select: none;
     cursor:pointer;
 }
-#information{
+#information {
     width: 270px;
     height: 150px;
-    background-color: white;
+    background-color: #dbceae;
     margin-top: 50px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-#room{
-    background-color: white;
+#room {
+    background-color: #dbceae;
     width: 270px;
     height: 400px;
     margin-top: 15px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    text-align:center;
+    text-align: center;
 }
-#black_player{
-  background-color: white;
-  margin-top: 60px;
-  height: 50px;
-  margin-left: 10px;
-  width: 80%;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+#black_player {
+    background-color: #dbceae;
+    margin-top: 60px;
+    height: 50px;
+    margin-left: 10px;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.time{
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-left: 10px;
-  background-color: white;
-  height: 30px;
-  width: 40%;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.time {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    background-color: #dbceae;
+    height: 30px;
+    width: 40%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .moves {
-    background-color: white;
+    background-color: #dbceae;
     height: 250px;
     width: 250px;
     margin-top: 50px;
@@ -92,14 +91,14 @@ tbody{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow-y: auto;
 }
-#white_player{
-  background-color: white;
-  margin-top: 10px;
-  height: 50px;
-  margin-left: 10px;
-  width: 80%;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+#white_player {
+    background-color: #dbceae;
+    margin-top: 10px;
+    height: 50px;
+    margin-left: 10px;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 #myVideo {
     position: fixed;
