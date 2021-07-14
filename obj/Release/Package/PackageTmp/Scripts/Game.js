@@ -5,8 +5,11 @@ var playeris;
 var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
 $(document).ready(function () {
-
-
+    
+    $('#timewhite').timeTo(1);
+    $('#timeblack').timeTo(1); 
+    $('#timewhite').timeTo("stop");
+    $('#timeblack').timeTo("stop");
     //popup lên thông báo nhập tên
     var person = prompt("Hãy nhập tên của bạn", "");
     if (person == "") {
@@ -59,6 +62,11 @@ $(document).ready(function () {
     hub.client.get_turn = function (msg) {
         $("#turn").text(msg);
         turn = msg;
+        $('#time' + msg).timeTo(1);
+        msg = (msg == "white") ? "black" : "white";
+        $('#time' + msg).timeTo("stop");
+        
+        
     }
 
     //move Log
@@ -134,6 +142,7 @@ $(document).ready(function () {
         if (player_name == $('#WhiteId').text()) {
             set_drag("w");
             playeris = "white";
+            $('#time' + turn).timeTo(1);
             $("#kayle").text("Your turn fisrt !");
             // hub.server.set_turn(param,"w")
 
@@ -420,7 +429,10 @@ function set_drop(id) {
                 disabled: true
             });
             $("td").css({ "border": "" });
+            $('#time' + turn).timeTo(1);
+            $('#time' + turn).timeTo("stop");
             turn = (turn == "white") ? "black" : "white";
+            $('#time' + turn).timeTo(1);
             $("#turn").text(turn);
             hub.server.set_turn(param, turn)
             hub.server.sendFen(param, ol, ne, fen_generate());

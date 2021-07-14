@@ -66,13 +66,13 @@ tbody{
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.time {
+.timeplay {
     margin-top: 15px;
     margin-bottom: 15px;
     margin-left: 10px;
     background-color: #dbceae;
     height: 30px;
-    width: 40%;
+    width: 180px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
