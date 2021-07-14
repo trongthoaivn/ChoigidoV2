@@ -287,6 +287,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\Video\win.mp3" />
     <Content Include="Content\Video\covid.mp4" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Image\Pure_Chess_Logo_R_trans.png" />

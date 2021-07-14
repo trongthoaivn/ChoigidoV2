@@ -119,6 +119,15 @@ $(document).ready(function () {
             }
         });
     }
+    // Won & exit & delete room
+    hub.client.setWin = function (name) {
+        var audio = new Audio("/Content/Video/win.mp3");
+        audio.play();
+        $.alert({
+            title: 'Congratulations !',
+            content: name + ' won  !',
+        });
+    }
 
     // play để bắt đầu
     $("#play").click(function () {
@@ -403,10 +412,10 @@ function set_drop(id) {
             var droppedOn = $(this);
             var ol = $(dropped).parent().attr("id");
             var ne = $(droppedOn).attr("id")
-            hub.server.send_move(param, ol , ne)
+            hub.server.send_move(param, ol, ne)
+            won($(droppedOn).find('img'));
             $(droppedOn).find('img').remove();
             $(dropped).detach().css({ top: 0, left: 0 }).appendTo(droppedOn);
-
             $("td").droppable({
                 disabled: true
             });
@@ -426,4 +435,12 @@ function createLog(ol, ne, fen) {
         hub.server.sendRequest(param, $(this).text(), $(this).attr("id"));
     });
     init++;
+}
+
+function won(element) {
+    if (element.attr("class") != undefined) {
+        if (element.attr("class").split(" ")[0] == "K" || element.attr("class").split(" ")[0] == "k") {
+            hub.server.sendWinMsg(param, player_name)
+        }
+    }
 }
