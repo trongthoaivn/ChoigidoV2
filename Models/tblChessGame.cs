@@ -9,11 +9,11 @@ namespace Choigido.Models
     [Table("tblChessGame")]
     public partial class tblChessGame
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblChessGame()
-        {
-            tblPlayerMoves = new HashSet<tblPlayerMoves>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public tblChessGame()
+        //{
+        //    tblPlayerMoves = new HashSet<tblPlayerMoves>();
+        //}
 
         [Key]
         [StringLength(50)]
@@ -32,9 +32,9 @@ namespace Choigido.Models
         [StringLength(50)]
         public string PlayerID { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPlayerMoves> tblPlayerMoves { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tblPlayerMoves> tblPlayerMoves { get; set; }
 
-        public virtual tblPlayer tblPlayer { get; set; }
+        //public virtual tblPlayer tblPlayer { get; set; }
     }
 }

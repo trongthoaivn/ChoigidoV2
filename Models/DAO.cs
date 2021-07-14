@@ -35,11 +35,11 @@ namespace Choigido.Models
                 .Property(e => e.PlayerID)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<tblChessGame>()
-                .HasMany(e => e.tblPlayerMoves)
-                .WithRequired(e => e.tblChessGame)
-                .HasForeignKey(e => e.PlayerID)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<tblChessGame>()
+            //    .HasMany(e => e.tblPlayerMoves)
+            //    .WithRequired(e => e.tblChessGame)
+            //    .HasForeignKey(e => e.PlayerID)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<tblChessPieces>()
                 .HasMany(e => e.tblPlayerMoves)
