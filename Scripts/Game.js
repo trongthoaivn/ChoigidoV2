@@ -134,7 +134,14 @@ $(document).ready(function () {
         $.alert({
             title: 'Congratulations !',
             content: name + ' won  !',
+            confirm: function () {
+
+
+                ///sự kiện xóa phòng
+                console.log('Confirmed!');
+            }
         });
+       
     }
 
     // play để bắt đầu
