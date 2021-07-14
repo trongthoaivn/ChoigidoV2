@@ -3,71 +3,25 @@
 }
 
 <link rel="stylesheet" href="~/Content/Index.css" />
-
-<body>
+<style>
+    body {
+        background-color: #0a0a0c;
+        background-image: url(../../Content/Image/demacia3.jpeg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        color : whitesmoke;
+    }
+</style>
+<body >
     <div class="logo">
         <img src="~/Content/Image/Logo.png">
     </div>
 
-    <video autoplay muted loop id="myVideo">
+    @*<video autoplay muted loop id="myVideo">
         <source src="~/Content/Video/video_backgrouds.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
-    </video>
-    <button class="EnterRoom">Vào phòng</button>
-    <input type="text" id="RoomId" />
-    <button class="playnow">Chơi ngay</button>
+    </video>*@
 </body>
 @section scripts{
-    <script>
-    $('.playnow').click(function (e) {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "../api/CreateRoom",
-            /*data: source,*/
-            success: function (data) {
-                console.log("Mã phòng là: " + data.RoomID);
-                var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
-                window.location.href = url;
-            },
-            error: function (error) {
-                jsonValue = jQuery.parseJSON(error.responseText);
-                alert("error" + error.responseText);
-            }
-        });
-    })
-    </script>
-    <script>
-    $('.EnterRoom').click(function (e) {
-        e.preventDefault();
-        var Id = document.getElementById("RoomId").value;
-        if (Id == "") {
-            alert("Vui lòng nhập mã phòng");
-        }
-        else {
-            $.ajax({
-                type: "GET",
-                /*dataType: "json",*/
-                url: "../api/CheckRoom",
-                data: { 'Id': Id},
-                success: function (data) {
-                    if (data.RoomID != "Null") {
-                        console.log("Mã phòng là: " + data.RoomID);
-                        var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
-                        window.location.href = url;
-                    }
-                    else
-                    {
-                        alert("Phòng không tồn tại hoặc đã đủ người chơi")
-                    }
-            },
-            error: function (error) {
-                jsonValue = jQuery.parseJSON(error.responseText);
-                alert("error" + error.responseText);
-            }
-        });
-        }
-    })
-    </script>
-
+ 
 }

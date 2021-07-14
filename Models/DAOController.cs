@@ -71,5 +71,32 @@ namespace Choigido.Models
             }
             return flag;
         }
+
+        public List<tblChessGame> listRoom()
+        {
+            try
+            {
+                return dao.tblChessGame.ToList();
+            }catch(Exception ex)
+            {
+                ex.Message.ToString();
+                return null;
+            }
+        }
+
+        public bool deleteRoom(string Id)
+        {
+            try
+            {
+                var room = dao.tblChessGame.FirstOrDefault(p=>p.GameID.Equals(Id));
+                dao.tblChessGame.Remove(room);
+                dao.SaveChanges();
+                return true;
+            }catch(Exception ex)
+            {
+                ex.Message.ToString();
+                return false;
+            }
+        }
     }
 }

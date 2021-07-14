@@ -118,5 +118,45 @@ namespace Choigido.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        [Route("api/GetAllRoom")]
+        public IHttpActionResult GetAllRoom()
+        {
+            if(new DAOController().listRoom() != null)
+            {
+                return Json(new
+                {
+                    roomList = new DAOController().listRoom()
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    roomList = "Null"
+                });
+            }
+        }
+
+        [HttpGet]
+        [Route("api/DeleteRoom")]
+        public IHttpActionResult DeleteRoom(string Id)
+        {
+            if(new DAOController().deleteRoom(Id))
+            {
+                return Json(new
+                {
+                    check = "Ok"
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    check = "Null"
+                });
+            }
+        }
     }
 }
