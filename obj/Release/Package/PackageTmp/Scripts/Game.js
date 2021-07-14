@@ -1,5 +1,4 @@
-﻿
-var hub = $.connection.serverHub;
+﻿var hub = $.connection.serverHub;
 var player_name;
 var playeris;
 var searchParams = new URLSearchParams(window.location.search);
@@ -131,10 +130,32 @@ $(document).ready(function () {
     hub.client.setWin = function (name) {
         var audio = new Audio("/Content/Video/win.mp3");
         audio.play();
-        $.alert({
+        $.confirm({
             title: 'Congratulations !',
             content: name + ' won  !',
+            buttons: {
+                Accept: {
+                    text: 'Ok',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        $.ajax({
+                            type: "GET",
+                            /*dataType: "json",*/
+                            url: "../api/DeleteRoom",
+                            data: { 'Id': param},
+                            success: function (data) {
+                                window.location.href = "/Game/Lobby";
+                            },
+                            error: function (error) {
+                                jsonValue = jQuery.parseJSON(error.responseText);
+                                alert("error" + error.responseText);
+                            }
+                        });
+                    }
+                },
+            }
         });
+       
     }
 
     // play để bắt đầu

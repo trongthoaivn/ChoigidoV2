@@ -5,6 +5,41 @@
 
 @section scripts{
     <script>
+        $(document).ready(function (e) {
+            setInterval(loadRoom, 5000);
+            loadRoom();
+        })
+    </script>
+
+    <script>
+        function loadRoom() {
+            $('.table tr td').remove();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "../api/GetAllRoom",
+                /*data: source,*/
+                success: function (data) {
+                    $(data.roomList).each(function (index, element) {
+                        var flag = "<td style='color: green'>Đang chờ...</td>";
+                        var join = "<button class='btn btn-success' style='background-color: #45C3F0' onclick='join(" + '"' + element.GameID + '"' + ")' value=" + element.GameID + ">Vào</button>";
+                        if (element.PlayerBlackID != null) {
+                            flag = "<td style='color: yellow'>Đang đấu!!!</td>";
+                            join = "<button class='btn btn-danger' style='background-color: #ED6767' href='#' disabled>Đầy</button>";
+                        }
+                        $('.table').append("<tr><td>" + index + "</td><td>" + element.GameID + "</td><td>" + element.PlayerWhiteID + "</td><td>" + element.PlayerBlackID + "</td>"
+                            + flag + "<td>" + join + "</td></tr>");
+                    })
+                },
+                error: function (error) {
+                    jsonValue = jQuery.parseJSON(error.responseText);
+                    alert("error" + error.responseText);
+                }
+            });
+        }
+    </script>
+
+    <script>
     $('#playnow').click(function (e) {
         $.ajax({
             type: "GET",
@@ -56,6 +91,30 @@
     })
     </script>
 
+    <script>
+        function join(Id) {
+            $.ajax({
+                type: "GET",
+                /*dataType: "json",*/
+                url: "../api/CheckRoom",
+                data: { 'Id': Id },
+                success: function (data) {
+                    if (data.RoomID != "Null") {
+                        console.log("Mã phòng là: " + data.RoomID);
+                        var url = '@Url.Action("GameRoom", "Game")?Id=' + data.RoomID;
+                        window.location.href = url;
+                    }
+                    else {
+                        alert("Phòng không tồn tại hoặc đã đủ người chơi")
+                    }
+                },
+                error: function (error) {
+                    jsonValue = jQuery.parseJSON(error.responseText);
+                    alert("error" + error.responseText);
+                }
+            });
+        }
+    </script>
 }
 <style>
     body {
@@ -66,18 +125,21 @@
         background-repeat: no-repeat;
         color: whitesmoke;
     }
+
     #RoomId {
-        margin-top:30px;
+        margin-top: 30px;
         background-color: #121212;
         color: #a38e40;
         border-color: #a38e40;
     }
+
     #playnow {
         margin-top: 20px;
         background-color: #17191e;
         color: #c3a758;
         border-color: #c3a758;
     }
+
     #EnterRoom {
         margin-left: 20px;
         margin-top: 20px;
@@ -85,13 +147,15 @@
         border-color: #A38E40;
         color: #21262D;
     }
+
     .listRoom {
-        height: 80%;
+        height: 300px;
         background-color: #17191e;
+        overflow: auto;
     }
 </style>
 
-<body > 
+<body>
     <div class="container">
         <div class="col-lg-6">
             <H2><span style="color: #17191e">Play game</span></H2>
@@ -105,35 +169,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã phòng</th>
+                            <th scope="col">Người chơi 1</th>
+                            <th scope="col">Người chơi 2</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Tham gia</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>twitter</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </body>
