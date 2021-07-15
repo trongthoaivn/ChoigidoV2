@@ -69,5 +69,10 @@ namespace Choigido.Hubs
         {
             Clients.Group(group).setWin(name);
         }
+
+        public void alertLeaveBoard(string group, string msg)
+        {
+            Clients.OthersInGroup(group).getAlertLeave(msg);
+        }
     }
 }

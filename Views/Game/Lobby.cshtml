@@ -21,11 +21,11 @@
                 /*data: source,*/
                 success: function (data) {
                     $(data.roomList).each(function (index, element) {
-                        var flag = "<td style='color: green'>Đang chờ...</td>";
-                        var join = "<button class='btn btn-success' style='background-color: #45C3F0' onclick='join(" + '"' + element.GameID + '"' + ")' value=" + element.GameID + ">Vào</button>";
+                        var flag = "<td style='color: green'>Waiting...</td>";
+                        var join = "<button class='btn btn-success' style='background-color: #45C3F0' onclick='join(" + '"' + element.GameID + '"' + ")' value=" + element.GameID + ">Go</button>";
                         if (element.PlayerBlackID != null) {
-                            flag = "<td style='color: yellow'>Đang đấu!!!</td>";
-                            join = "<button class='btn btn-danger' style='background-color: #ED6767' href='#' disabled>Đầy</button>";
+                            flag = "<td style='color: yellow'>Playing!!!</td>";
+                            join = "<button class='btn btn-danger' style='background-color: #ED6767' href='#' disabled>Full</button>";
                         }
                         $('.table').append("<tr><td>" + index + "</td><td>" + element.GameID + "</td><td>" + element.PlayerWhiteID + "</td><td>" + element.PlayerBlackID + "</td>"
                             + flag + "<td>" + join + "</td></tr>");
@@ -169,12 +169,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Mã phòng</th>
-                            <th scope="col">Người chơi 1</th>
-                            <th scope="col">Người chơi 2</th>
-                            <th scope="col">Tình trạng</th>
-                            <th scope="col">Tham gia</th>
+                            <th scope="col">No.</th>
+                            <th scope="col">Room Id</th>
+                            <th scope="col">Player White</th>
+                            <th scope="col">Player Black</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Join</th>
                         </tr>
                     </thead>
                     <tbody>
