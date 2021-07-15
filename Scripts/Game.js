@@ -3,8 +3,15 @@ var player_name;
 var playeris;
 var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
+
+//Kiểm tra rời phòng xóa phòng
+window.onbeforeunload = function () {
+    deleteBoard();
+    hub.server.alertLeaveBoard(param, "Đối thủ đã rời phòng!!!");
+};
+
 $(document).ready(function () {
-    
+
     $('#timewhite').timeTo(1);
     $('#timeblack').timeTo(1); 
     $('#timewhite').timeTo("stop");
@@ -95,6 +102,22 @@ $(document).ready(function () {
         if (turn == playeris) {
             $("#kayle").text("Your turn !");
         } else $("#kayle").text("Opponent's turn !");
+    }
+
+    hub.client.getAlertLeave = function (msg) {
+        $.confirm({
+            title: 'Notification',
+            content: 'Enemy surrender!!! you won. ',
+            buttons: {
+                Accept: {
+                    text: 'Accept',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        window.location.href = "/Game/Lobby";
+                    }
+                },
+            }
+        });
     }
 
     // request undo
@@ -476,4 +499,20 @@ function won(element) {
             hub.server.sendWinMsg(param, player_name)
         }
     }
+}
+
+function deleteBoard() {
+    $.ajax({
+        type: "GET",
+        /*dataType: "json",*/
+        url: "../api/DeleteRoom",
+        data: { 'Id': param },
+        success: function (data) {
+            window.location.href = "/Game/Lobby";
+        },
+        error: function (error) {
+            jsonValue = jQuery.parseJSON(error.responseText);
+            alert("error" + error.responseText);
+        }
+    });
 }
