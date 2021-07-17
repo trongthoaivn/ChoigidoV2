@@ -245,6 +245,7 @@
     <Content Include="Content\Image\Logo.png" />
     <Content Include="Content\Image\YxoIETK.gif" />
     <Content Include="Content\jquery-confirm.min.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\jquery.time-to.js" />
     <Content Include="Content\sweetalert2.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -291,7 +292,6 @@
     <Content Include="Content\timeTo.css" />
     <Content Include="Content\Video\win.mp3" />
     <Content Include="Content\Video\covid.mp4" />
-    <Content Include="favicon.ico" />
     <Content Include="Content\Image\Pure_Chess_Logo_R_trans.png" />
     <Content Include="Content\Image\Logomark.png" />
     <Content Include="Content\Image\white_bishop.svg" />
