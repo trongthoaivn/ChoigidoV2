@@ -36,6 +36,7 @@ $(document).ready(function () {
         draw_pieces();
         $("#turn").text(turn);
         $("#kayle").text("Waiting for player 2 ");
+        $("#Create_Board").attr("disabled", true);
         $("#play").attr("disabled", true);
     });
 
@@ -49,6 +50,7 @@ $(document).ready(function () {
         setTimeout(function () { 
             if (!($('#BlackId').text() == "")) {
                 $("#play").attr("disabled", false);
+                $("#Create_Board").attr("disabled", false);
                 $("#kayle").text("Press Start Game !");
             }
         }, 3000);
@@ -118,6 +120,12 @@ $(document).ready(function () {
                 },
             }
         });
+    }
+
+    hub.client.getloadGame = function (fen) {
+        console.log(fen)
+        Clear_board();
+        draw_pieces(fen);
     }
 
     // request undo
@@ -230,9 +238,10 @@ $(document).ready(function () {
 
     //Bắt sự kiện save game
     $("#save").click(function () {
-        $.confirm({
+        $.alert({
             title: 'Notification',
-            content: 'Fen of game: (' + Fen + ')',
+            content: 'Copy the Fen below to save the game: ' + Fen,
+            with:800
         });
     })
 });
@@ -314,10 +323,8 @@ const List_pieces = [k, q, b, n, r, p, K, Q, B, N, R, P]
 var turn ="white" ;
 //tạo bàn cờ theo fen
 function Create_lick() {
-    var Fen = $("#Fen").val();
-    Clear_board();
-    draw_pieces(Fen);
-
+    var str = $("#Fen").val(); console.log(str)
+    hub.server.setloadGame(param, str);
 }
 // thực hiện nuóc đi theo socket
 function make_move(oldp, newp) {
@@ -497,6 +504,10 @@ function createLog(ol, ne, fen) {
     $('#move-table').append(' <button type="button" style="text-align:center" id="' + fen + '" class="Log' + init + ' list-group-item ">' + init + ' : ' + ol + ' => ' + ne + ' </button>');
     $('.Log' + init).click(function () {
         hub.server.sendRequest(param, $(this).text(), $(this).attr("id"));
+        $.alert({
+            title: 'Notification',
+            content: 'Sent request!',
+        });
     });
     init++;
 }

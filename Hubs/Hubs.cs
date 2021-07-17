@@ -74,5 +74,10 @@ namespace Choigido.Hubs
         {
             Clients.OthersInGroup(group).getAlertLeave(msg);
         }
+
+        public void setloadGame(string group , string fen)
+        {
+            Clients.Group(group).getloadGame(fen);
+        }
     }
 }
