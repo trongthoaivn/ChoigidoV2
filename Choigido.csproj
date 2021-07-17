@@ -371,6 +371,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Game\GameRoom.cshtml" />
     <Content Include="Views\Game\Lobby.cshtml" />
+    <Content Include="Views\Game\PvE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,11 +1,17 @@
-﻿
-var hub = $.connection.serverHub;
+﻿var hub = $.connection.serverHub;
 var player_name;
 var playeris;
+var Fen;
 var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
+
+//Kiểm tra rời phòng xóa phòng
+window.onbeforeunload = function () {
+    deleteBoard();
+    hub.server.alertLeaveBoard(param, "Đối thủ đã rời phòng!!!");
+};
+
 $(document).ready(function () {
-    
     $('#timewhite').timeTo(1);
     $('#timeblack').timeTo(1); 
     $('#timewhite').timeTo("stop");
@@ -30,6 +36,7 @@ $(document).ready(function () {
         draw_pieces();
         $("#turn").text(turn);
         $("#kayle").text("Waiting for player 2 ");
+        $("#Create_Board").attr("disabled", true);
         $("#play").attr("disabled", true);
     });
 
@@ -43,6 +50,7 @@ $(document).ready(function () {
         setTimeout(function () { 
             if (!($('#BlackId').text() == "")) {
                 $("#play").attr("disabled", false);
+                $("#Create_Board").attr("disabled", false);
                 $("#kayle").text("Press Start Game !");
             }
         }, 3000);
@@ -71,7 +79,7 @@ $(document).ready(function () {
 
     //move Log
     hub.client.getFen = function (ol, ne, fen) {
-        
+        Fen = fen;
         createLog(ol, ne, fen);
     }
 
@@ -96,6 +104,28 @@ $(document).ready(function () {
         if (turn == playeris) {
             $("#kayle").text("Your turn !");
         } else $("#kayle").text("Opponent's turn !");
+    }
+
+    hub.client.getAlertLeave = function (msg) {
+        $.confirm({
+            title: 'Notification',
+            content: 'Enemy surrender!!! you won. ',
+            buttons: {
+                Accept: {
+                    text: 'Accept',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        window.location.href = "/Game/Lobby";
+                    }
+                },
+            }
+        });
+    }
+
+    hub.client.getloadGame = function (fen) {
+        console.log(fen)
+        Clear_board();
+        draw_pieces(fen);
     }
 
     // request undo
@@ -131,10 +161,32 @@ $(document).ready(function () {
     hub.client.setWin = function (name) {
         var audio = new Audio("/Content/Video/win.mp3");
         audio.play();
-        $.alert({
+        $.confirm({
             title: 'Congratulations !',
             content: name + ' won  !',
+            buttons: {
+                Accept: {
+                    text: 'Ok',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        $.ajax({
+                            type: "GET",
+                            /*dataType: "json",*/
+                            url: "../api/DeleteRoom",
+                            data: { 'Id': param},
+                            success: function (data) {
+                                window.location.href = "/Game/Lobby";
+                            },
+                            error: function (error) {
+                                jsonValue = jQuery.parseJSON(error.responseText);
+                                alert("error" + error.responseText);
+                            }
+                        });
+                    }
+                },
+            }
         });
+       
     }
 
     // play để bắt đầu
@@ -182,6 +234,15 @@ $(document).ready(function () {
         }
         sendMessage(msg, "self")
         hub.server.sendMessage(param, person, msg);
+    })
+
+    //Bắt sự kiện save game
+    $("#save").click(function () {
+        $.alert({
+            title: 'Notification',
+            content: 'Copy the Fen below to save the game: ' + Fen,
+            with:800
+        });
     })
 });
 function chat(name, msg) {
@@ -262,10 +323,8 @@ const List_pieces = [k, q, b, n, r, p, K, Q, B, N, R, P]
 var turn ="white" ;
 //tạo bàn cờ theo fen
 function Create_lick() {
-    var Fen = $("#Fen").val();
-    Clear_board();
-    draw_pieces(Fen);
-
+    var str = $("#Fen").val(); console.log(str)
+    hub.server.setloadGame(param, str);
 }
 // thực hiện nuóc đi theo socket
 function make_move(oldp, newp) {
@@ -445,6 +504,10 @@ function createLog(ol, ne, fen) {
     $('#move-table').append(' <button type="button" style="text-align:center" id="' + fen + '" class="Log' + init + ' list-group-item ">' + init + ' : ' + ol + ' => ' + ne + ' </button>');
     $('.Log' + init).click(function () {
         hub.server.sendRequest(param, $(this).text(), $(this).attr("id"));
+        $.alert({
+            title: 'Notification',
+            content: 'Sent request!',
+        });
     });
     init++;
 }
@@ -455,4 +518,20 @@ function won(element) {
             hub.server.sendWinMsg(param, player_name)
         }
     }
+}
+
+function deleteBoard() {
+    $.ajax({
+        type: "GET",
+        /*dataType: "json",*/
+        url: "../api/DeleteRoom",
+        data: { 'Id': param },
+        success: function (data) {
+            window.location.href = "/Game/Lobby";
+        },
+        error: function (error) {
+            jsonValue = jQuery.parseJSON(error.responseText);
+            alert("error" + error.responseText);
+        }
+    });
 }

@@ -132,6 +132,13 @@
         color: #a38e40;
         border-color: #a38e40;
     }
+    #PvE {
+        margin-left: 10px;
+        margin-top: 20px;
+        background-color: #17191e;
+        color: #c3a758;
+        border-color: #c3a758;
+    }
 
     #playnow {
         margin-top: 20px;
@@ -141,7 +148,7 @@
     }
 
     #EnterRoom {
-        margin-left: 20px;
+        margin-left: 10px;
         margin-top: 20px;
         background-color: #A38E40;
         border-color: #A38E40;
@@ -161,6 +168,7 @@
             <H2><span style="color: #17191e">Play game</span></H2>
             <input id="RoomId" type="text" class="form-control" placeholder="Enter Room ID">
             <button id="playnow" class="btn btn-success">Play now !</button>
+            <button id="PvE" class="btn btn-success" onclick="location.href='@Url.Action("PvE","Game")'">PvE !</button>
             <button id="EnterRoom" class="btn btn-warning">Join room</button>
         </div>
         <div class="col-lg-6">

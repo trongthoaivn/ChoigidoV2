@@ -18,5 +18,10 @@ namespace Choigido.Controllers
         {
             return View();
         }
+
+        public ActionResult PvE()
+        {
+            return View();
+        }
     }
 }
