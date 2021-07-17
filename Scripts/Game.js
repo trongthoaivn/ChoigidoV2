@@ -1,6 +1,7 @@
 ﻿var hub = $.connection.serverHub;
 var player_name;
 var playeris;
+var Fen;
 var searchParams = new URLSearchParams(window.location.search);
 var param = searchParams.get('Id');
 
@@ -11,7 +12,6 @@ window.onbeforeunload = function () {
 };
 
 $(document).ready(function () {
-
     $('#timewhite').timeTo(1);
     $('#timeblack').timeTo(1); 
     $('#timewhite').timeTo("stop");
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     //move Log
     hub.client.getFen = function (ol, ne, fen) {
-        
+        Fen = fen;
         createLog(ol, ne, fen);
     }
 
@@ -226,6 +226,14 @@ $(document).ready(function () {
         }
         sendMessage(msg, "self")
         hub.server.sendMessage(param, person, msg);
+    })
+
+    //Bắt sự kiện save game
+    $("#save").click(function () {
+        $.confirm({
+            title: 'Notification',
+            content: 'Fen of game: (' + Fen + ')',
+        });
     })
 });
 function chat(name, msg) {
