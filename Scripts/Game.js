@@ -64,7 +64,8 @@ $(document).ready(function () {
 
     hub.client.make_move = function (ol, ne) {
         make_move(ol, ne);
-
+        var audio = new Audio("/Content/Video/Move.mp3");
+        audio.play();
     }
     // set luot di
     hub.client.get_turn = function (msg) {
@@ -480,6 +481,8 @@ function set_drop(id) {
             var droppedOn = $(this);
             var ol = $(dropped).parent().attr("id");
             var ne = $(droppedOn).attr("id")
+            var audio = new Audio("/Content/Video/Move.mp3");
+            audio.play();
             hub.server.send_move(param, ol, ne)
             won($(droppedOn).find('img'));
             $(droppedOn).find('img').remove();

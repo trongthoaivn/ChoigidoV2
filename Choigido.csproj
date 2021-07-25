@@ -217,6 +217,8 @@
     <Content Include="Content\Image\demacia.jpg" />
     <Content Include="Content\Image\demacia1.jpg" />
     <Content Include="Content\Image\demacia3.jpeg" />
+    <Content Include="Content\Image\Logo-Sau.png" />
+    <Content Include="Content\Image\Logo-Truoc.png" />
     <Content Include="Content\Image\noxus.png" />
     <Content Include="Content\Image\vs2018Lol.jpg" />
     <Content Include="Content\Image\akali-chibi.png" />
@@ -230,6 +232,7 @@
     <Content Include="Content\Image\Logo.png" />
     <Content Include="Content\Image\YxoIETK.gif" />
     <Content Include="Content\jquery-confirm.min.css" />
+    <Content Include="Content\Video\Move.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\jquery.time-to.js" />
     <Content Include="Content\sweetalert2.css" />
